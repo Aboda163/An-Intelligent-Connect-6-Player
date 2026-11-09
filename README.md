@@ -28,5 +28,4 @@ An intelligent player for Connect-6, an extended version of Connect Four played 
 ## ⚙️ How to Run
 
 1. Clone the repository:
-   ```bash
-  https://github.com/Aboda163/An-Intelligent-Connect-6-Player.git
+   ```bash https://github.com/Aboda163/An-Intelligent-Connect-6-Player.git
