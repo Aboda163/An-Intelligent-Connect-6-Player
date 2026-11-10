@@ -12,12 +12,12 @@ An intelligent player for Connect-6, an extended version of Connect Four played 
 
 ## 👥 Team Members
 
-1. Malak 
-2. Sara 
-3. Abdallah 
-4. Ahmed 
-5. Menna 
-6. Momen 
+1. Malak Samir
+2. Sara Hassan
+3. Abdallah Mohamed
+4. Ahmed Ayman
+5. Menna Allah Sayed
+6. Momen Hussein
 
 ## 📂 Repository Structure
 
