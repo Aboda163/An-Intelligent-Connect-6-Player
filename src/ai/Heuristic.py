@@ -1,7 +1,4 @@
 class Heuristic:
-    def __init__(self) -> None:
-        pass
-
     def analyze_line(self, line, player):
         count = 0
         start = None
@@ -31,7 +28,7 @@ class Heuristic:
 
 
     def detect_5orm_pattern(self, line, player):
-        patterns = []
+        patterns = {}
         opponent = 2 if player == 1 else 1
         window_size = 6
 
@@ -43,14 +40,18 @@ class Heuristic:
             empty_count = window.count(0)
 
             if opponent_count == 0 and player_count >= 2 and empty_count > 0:
-                positions = [i for i, cell in enumerate(window) if cell == player]
+                positions = tuple(
+                    i + index
+                    for index, cell in enumerate(window)
+                    if cell == player
+                )
 
                 has_gap = positions[-1] - positions[0] + 1 > player_count
 
                 if has_gap:
-                    patterns.append((player_count, empty_count))
+                    patterns[positions] = (player_count, empty_count)
 
-        return patterns
+        return list(patterns.values())
 
 
     def get_5orm_pattern_score(self, line, player):

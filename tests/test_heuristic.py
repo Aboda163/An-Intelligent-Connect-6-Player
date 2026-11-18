@@ -17,7 +17,6 @@ def test_ai_advantage():
         board.place_stone(5, c, 1)
 
     score = heuristic.evaluate_board(board, 1)
-
     assert score > 0
 
 
@@ -29,7 +28,6 @@ def test_opponent_advantage():
         board.place_stone(5, c, 2)
 
     score = heuristic.evaluate_board(board, 1)
-
     assert score < 0
 
 
@@ -53,7 +51,6 @@ def test_diagonal_advantage():
         board.place_stone(i, i, 1)
 
     score = heuristic.evaluate_board(board, 1)
-
     assert score > 0
 
 
@@ -65,7 +62,6 @@ def test_down_left_diagonal_advantage():
         board.place_stone(i, 3 - i, 1)
 
     score = heuristic.evaluate_board(board, 1)
-
     assert score > 0
 
 
@@ -75,5 +71,22 @@ def test_six_in_a_row_scores_high():
     line = [1, 1, 1, 1, 1, 1, 0]
 
     score = heuristic.get_line_score(line, 1)
-
     assert score >= 1_000_000
+
+
+def test_detect_broken_pattern():
+    heuristic = Heuristic()
+
+    line = [0, 1, 1, 0, 1, 1, 0]
+
+    patterns = heuristic.detect_5orm_pattern(line, 1)
+    assert len(patterns) > 0
+
+
+def test_ignore_consecutive_patterns():
+    heuristic = Heuristic()
+
+    line = [0, 1, 1, 1, 1, 0]
+
+    patterns = heuristic.detect_5orm_pattern(line, 1)
+    assert patterns == []
