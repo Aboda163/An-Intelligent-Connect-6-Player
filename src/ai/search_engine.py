@@ -1,5 +1,5 @@
 import copy
-from .Heuristic import Heuristic
+from .heuristic import Heuristic
 
 class SearchEngine:
     """This class is made to apply the minimax algorithm and alpha beta pruning to find the best move."""

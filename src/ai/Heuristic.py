@@ -29,10 +29,52 @@ class Heuristic:
 
         return patterns
 
-    
+
+    def detect_5orm_pattern(self, line, player):
+        patterns = []
+        opponent = 2 if player == 1 else 1
+        window_size = 6
+
+        for i in range(len(line) - window_size + 1):
+            window = line[i:i + window_size]
+
+            player_count = window.count(player)
+            opponent_count = window.count(opponent)
+            empty_count = window.count(0)
+
+            if opponent_count == 0 and player_count >= 2 and empty_count > 0:
+                positions = [i for i, cell in enumerate(window) if cell == player]
+
+                has_gap = positions[-1] - positions[0] + 1 > player_count
+
+                if has_gap:
+                    patterns.append((player_count, empty_count))
+
+        return patterns
+
+
+    def get_5orm_pattern_score(self, line, player):
+        patterns = self.detect_5orm_pattern(line, player)
+
+        scores = {
+            2: 50,
+            3: 500,
+            4: 5000,
+            5: 100000
+        }
+
+        score = 0
+
+        for player_count, empty_count in patterns:
+            score += scores.get(player_count, 0)
+
+        return score
+
+
     def get_line_score(self, line, player):
         patterns = self.analyze_line(line, player)
         score = 0
+
         scores = {
             1: 10,
             2: 100,
@@ -45,14 +87,12 @@ class Heuristic:
         for count, empty_left, empty_right in patterns:
             if count >= 6:
                 score += scores[6]
-
-            elif empty_right and empty_left:
+            elif empty_left and empty_right:
                 score += scores[count]
-            elif empty_right or empty_left:
-                if count == 5:
-                    score += scores[count] / 2
-                else:
-                    score += scores[count] / 5
+            elif empty_left or empty_right:
+                score += scores[count] / (2 if count == 5 else 5)
+
+        score += self.get_5orm_pattern_score(line, player)
 
         return score
 
